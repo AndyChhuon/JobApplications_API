@@ -1,15 +1,15 @@
 ﻿using JobApplicants.Models;
 
-namespace JobApplicants.Repositories
+namespace JobApplicants.Repositories.InMemory
 {
     public class InMemItemsRepository : IInMemItemsRepository
     {
         //Applicants list
         private readonly List<Applicant> applicants = new()
         {
-            new Applicant { Id = Guid.NewGuid(), Name = "Joe", CreatedDate = DateTimeOffset.UtcNow },
-            new Applicant { Id = Guid.NewGuid(), Name = "Jack", CreatedDate = DateTimeOffset.UtcNow },
-            new Applicant { Id = Guid.NewGuid(), Name = "John", CreatedDate = DateTimeOffset.UtcNow }
+            new Applicant { Id = Guid.NewGuid(), FirstName = "Joe", CreatedDate = DateTimeOffset.UtcNow },
+            new Applicant { Id = Guid.NewGuid(), FirstName = "Jack", CreatedDate = DateTimeOffset.UtcNow },
+            new Applicant { Id = Guid.NewGuid(), FirstName = "John", CreatedDate = DateTimeOffset.UtcNow }
 
 
         };

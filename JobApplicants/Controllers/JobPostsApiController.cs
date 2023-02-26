@@ -1,7 +1,9 @@
 ﻿using JobApplicants.Models;
 using JobApplicants.Models.DTO;
-using JobApplicants.Repositories;
+using JobApplicants.Repositories.InMemory;
+using JobApplicants.Repositories.MongoDB.JobPostsApi;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 
 namespace JobApplicants.Controllers
 {
@@ -12,10 +14,10 @@ namespace JobApplicants.Controllers
     public class JobPostsApiController : ControllerBase
     {
 
-        private readonly IInMemItemsRepository repository;
+        private readonly IJobPostService repository;
 
         //Constructor
-        public JobPostsApiController(IInMemItemsRepository repository)
+        public JobPostsApiController(IJobPostService repository)
         {
             this.repository = repository;
         }
@@ -41,11 +43,20 @@ namespace JobApplicants.Controllers
             return item.toDTO();
         }
 
+        // Get /api/JobPostsAPI/{keyword}
+        [HttpGet("search/{keyword}")]
+        public IEnumerable<JobPost> SearchPost(String keyword)
+        {
+            var item = repository.searchPosts(keyword);
+
+            return item;
+        }
+
         // POST /api/JobPostsAPI/
         [HttpPost]
         public ActionResult<JobPostDTO> AddPost(AddJobPostDTO postDTO)
         {
-            JobPost newPost = new() { jobId = Guid.NewGuid(), jobTitle = postDTO.jobTitle, CreatedDate = DateTimeOffset.UtcNow, jobDescription = postDTO.jobDescription, jobCategory = postDTO.jobCategory, jobCompany = postDTO.jobCompany, jobLocation = postDTO.jobLocation, jobDate = postDTO.jobDate };
+            JobPost newPost = new() { jobId = Guid.NewGuid(), jobTitle = postDTO.jobTitle, CreatedDate = DateTimeOffset.UtcNow, jobDescription = postDTO.jobDescription, jobCategory = postDTO.jobCategory, jobCompany = postDTO.jobCompany, jobLocation = postDTO.jobLocation, jobDate = postDTO.jobDate, WorkType = postDTO.WorkType, WorkTime = postDTO.WorkTime, Benefits = postDTO.Benefits, fullDescription = postDTO.fullDescription };
             repository.AddJobPost(newPost);
 
             return CreatedAtAction(nameof(GetJobPosts), new { id = newPost.jobId }, newPost.toDTO());
@@ -70,6 +81,10 @@ namespace JobApplicants.Controllers
                 jobLocation = postDTO.jobLocation,
                 jobCompany = postDTO.jobCompany,
                 jobDate = postDTO.jobDate,
+                WorkType = postDTO.WorkType,
+                WorkTime = postDTO.WorkTime,
+                Benefits = postDTO.Benefits,
+                fullDescription = postDTO.fullDescription
 
             };
 

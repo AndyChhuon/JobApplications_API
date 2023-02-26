@@ -3,7 +3,7 @@
 namespace JobApplicants.Models.DTO
 {
     public class AddJobPostDTO
-    { 
+    {
         [Required]
         public String jobTitle { get; init; }
         [Required]
@@ -16,6 +16,15 @@ namespace JobApplicants.Models.DTO
         public string jobCompany { get; init; }
         [Required]
         public string jobDate { get; init; }
+        [Required]
+        public WorkType WorkType { get; init; }
+        [Required]
+        public String[] Benefits { get; init; }
+        [Required]
+        public WorkTime WorkTime { get; init; }
+        [Required]
+        public string fullDescription { get; init; }
+
 
     }
 }

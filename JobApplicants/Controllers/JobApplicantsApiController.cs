@@ -1,6 +1,6 @@
 ﻿using JobApplicants.Models;
 using JobApplicants.Models.DTO;
-using JobApplicants.Repositories;
+using JobApplicants.Repositories.MongoDB.JobApplicantsApi;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobApplicants.Controllers
@@ -12,10 +12,10 @@ namespace JobApplicants.Controllers
     public class JobApplicantsApiController : ControllerBase
     {
 
-        private readonly IInMemItemsRepository repository;
+        private readonly IJobApplicantService repository;
 
         //Constructor
-        public JobApplicantsApiController(IInMemItemsRepository repository)
+        public JobApplicantsApiController(IJobApplicantService repository)
         {
             this.repository = repository;
         }
@@ -45,7 +45,7 @@ namespace JobApplicants.Controllers
         [HttpPost]
         public ActionResult<ApplicantDTO> AddApplicant(AddApplicantDTO applicantDTO)
         {
-            Applicant applicant = new() { Id = Guid.NewGuid(), Name= applicantDTO.Name, CreatedDate = DateTimeOffset.UtcNow};
+            Applicant applicant = new() { Id = Guid.NewGuid(), FirstName = applicantDTO.FirstName, LastName = applicantDTO.LastName, City = applicantDTO.City, State = applicantDTO.State, UserName = applicantDTO.UserName, Experience = applicantDTO.Experience, Email = applicantDTO.Email, Password = applicantDTO.Password, Education = applicantDTO.Education, About = applicantDTO.About, CV = applicantDTO.CV, CreatedDate = DateTimeOffset.UtcNow, ProfileImg= applicantDTO.ProfileImg};
             repository.AddApplicant(applicant);
 
             return CreatedAtAction(nameof(GetApplicant), new { id = applicant.Id }, applicant.toDTO());
@@ -64,7 +64,18 @@ namespace JobApplicants.Controllers
 
             Applicant updatedApplicant = existingApplicant with
             {
-                Name = applicantDTO.Name
+                FirstName = applicantDTO.FirstName,
+                LastName = applicantDTO.LastName,
+                City = applicantDTO.City,
+                State = applicantDTO.State,
+                UserName = applicantDTO.UserName,
+                Experience = applicantDTO.Experience,
+                Email = applicantDTO.Email,
+                Password = applicantDTO.Password,
+                Education = applicantDTO.Education,
+                About = applicantDTO.About,
+                CV = applicantDTO.CV,
+                ProfileImg = applicantDTO.ProfileImg
             };
 
             repository.UpdateApplicant(updatedApplicant);

@@ -1,6 +1,6 @@
 ﻿using JobApplicants.Models;
 
-namespace JobApplicants.Repositories
+namespace JobApplicants.Repositories.InMemory
 {
     public interface IInMemItemsRepository
     {

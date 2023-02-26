@@ -1,4 +1,6 @@
-﻿namespace JobApplicants.Models.DTO
+﻿using MongoDB.Bson.Serialization.Attributes;
+
+namespace JobApplicants.Models.DTO
 {
     public record JobPostDTO
     {
@@ -10,7 +12,11 @@
         public string jobLocation { get; init; }
         public string jobCompany { get; init; }
         public string jobDate { get; init; }
+        public string fullDescription { get; init; }
         public DateTimeOffset CreatedDate { get; init; }
+        public WorkType WorkType { get; init; }
+        public WorkTime WorkTime { get; init; }
+        public String[] Benefits { get; init; }
 
 
     }
