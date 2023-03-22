@@ -43,11 +43,11 @@ namespace JobApplicants.Controllers
             return item.toDTO();
         }
 
-        // Get /api/JobPostsAPI/{keyword}
-        [HttpGet("search/{keyword}")]
-        public IEnumerable<JobPost> SearchPost(String keyword)
+        // Get /api/JobPostsAPI/search
+        [HttpPost("search")]
+        public IEnumerable<JobPost> SearchPost(String? keyword, String? Location, String? Category, String? workTime, String? workType, String[]? Benefits)
         {
-            var item = repository.searchPosts(keyword);
+            var item = repository.searchPosts(keyword, Location, Category, workTime, workType,Benefits);
 
             return item;
         }

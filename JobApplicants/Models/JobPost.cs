@@ -37,9 +37,11 @@ namespace JobApplicants.Models
         public string jobDate { get; init; }
         [BsonElement("fullDescription")]
         public string fullDescription { get; init; }
-        [BsonElement("WorkType")]
+        [BsonRepresentation(BsonType.String)]
+        [BsonElement("workType")]
         public WorkType WorkType { get; init; }
-        [BsonElement("WorkTime")]
+        [BsonRepresentation(BsonType.String)]
+        [BsonElement("workTime")]
         public WorkTime WorkTime { get; init; }
         [BsonElement("Benefits")]
         public String[] Benefits { get; init; }
